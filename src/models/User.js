@@ -40,7 +40,7 @@ userSchema.pre("validate", async function () {
     let exists = true;
 
     while (exists) {
-        userId = Math.floor(100 + Math.random() * 900).toString();
+        userId = Math.floor(1000 + Math.random() * 9000).toString();
 
         exists = await mongoose.models.User.exists({ userId });
     }
