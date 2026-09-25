@@ -5,7 +5,7 @@ const {
     login,
     getMe,
     findUserByUserId
-} = require("../controllers/authController");
+} = require("../controllers/AuthController");
 
 
 
