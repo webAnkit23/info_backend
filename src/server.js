@@ -13,10 +13,59 @@ const registrationRoute = require("./routes/RegistrationRoute");
 const app = express();
 
 // =========================
+// CORS CONFIGURATION
+// =========================
+
+const allowedOrigins = [
+    "https://www.infotrek26.tech",
+    "https://infotrek26.tech",
+
+    // Local development
+    "http://localhost:5173",
+    "http://localhost:3000"
+];
+
+app.use(
+    cors({
+        origin: function (origin, callback) {
+            // Allow requests such as Postman/server-to-server
+            if (!origin) {
+                return callback(null, true);
+            }
+
+            if (allowedOrigins.includes(origin)) {
+                return callback(null, true);
+            }
+
+            console.log("Blocked CORS origin:", origin);
+
+            return callback(
+                new Error("Not allowed by CORS")
+            );
+        },
+
+        methods: [
+            "GET",
+            "POST",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+        ],
+
+        allowedHeaders: [
+            "Content-Type",
+            "Authorization"
+        ],
+
+        credentials: true
+    })
+);
+
+// =========================
 // MIDDLEWARE
 // =========================
 
-app.use(cors());
 app.use(express.json());
 
 // =========================
@@ -52,7 +101,7 @@ mongoose
 
         app.listen(PORT, () => {
             console.log(
-                `Server running on http://localhost:${PORT}`
+                `Server running on port ${PORT}`
             );
         });
     })
